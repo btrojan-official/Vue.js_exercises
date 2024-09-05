@@ -3,8 +3,12 @@ const app = express();
 const PORT = 3000;
 
 const fs = require("fs");
-const filenames = fs.readdirSync(__dirname + "/static/cwiczenia");
-console.log(filenames);
+
+app.get("/pagesList", function (req, res) {
+  const filenames = fs.readdirSync(__dirname + "/static/cwiczenia");
+  console.log(filenames);
+  res.send(filenames);
+});
 
 app.use(express.static("static/cwiczenia/lekcja1"));
 app.use(express.static("static"));

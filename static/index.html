@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VUE</title>
+    <link rel="stylesheet" href="style/style.css" />
+
+    <script defer>
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      fetch("/pagesList", options)
+        .then((response) => response.json()) // konwersja na obiekt json, jeśli konieczne
+        .then((data) => alert(JSON.stringify(data, null, 5))) // sformatowane z wcięciami dane odpowiedzi z serwera
+        .catch((error) => console.log(error));
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>lekcje VueJS</h1>
+      <div class="lekcja1">
+        <h2>Lekcja 1</h2>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          message: "Hello Vue.js!",
+        },
+      });
+    </script>
+  </body>
+</html>
