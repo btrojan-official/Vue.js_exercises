@@ -9,10 +9,22 @@ const path = require("path");
 app.use(express.static("static"));
 
 app.get("/pagesList", function (req, res) {
-  dir_path = path.join(__dirname,"/static/cwiczenia");
-  const filenames = fs.readdirSync(dir_path);
-  console.log(filenames);
-  res.send({filenames});
+  dir_path = path.join(__dirname, "/static/cwiczenia");
+  let dirnames = fs.readdirSync(dir_path);
+
+  files = {};
+
+  for (lekcja of dirnames) {
+    let lekcja_path = path.join(dir_path, lekcja);
+    let lekcja_files = fs.readdirSync(lekcja_path);
+
+    files[lekcja] = lekcja_files;
+  }
+  // filenames = filenames.map((str) => "cwiczenia/" + str);
+
+  console.log(files);
+
+  res.send(files);
 });
 
 app.listen(PORT, function () {

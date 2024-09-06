@@ -8,7 +8,24 @@
 
     <script defer>
       function showPagesList(data) {
-        
+        lekcja1 = document.querySelector(".lekcja1");
+
+        for (const key in data) {
+          lekcja = document.createElement("div");
+          lekcja.classList.add("lekcja");
+          header = document.createElement("h2");
+          header.innerText = key;
+          lekcja.appendChild(header);
+
+          for (const el of data[key]) {
+            link = document.createElement("a");
+            link.href = "cwiczenia/" + key + "/" + el;
+            link.textContent = el;
+            lekcja.appendChild(link);
+          }
+
+          document.getElementById("app").appendChild(lekcja);
+        }
       }
 
       const options = {
@@ -19,23 +36,20 @@
       };
       fetch("/pagesList", options)
         .then((response) => response.json()) // konwersja na obiekt json, jeśli konieczne
-        .then((data) => alert(JSON.stringify(data, null, 5))) // sformatowane z wcięciami dane odpowiedzi z serwera
+        .then((data) => showPagesList(data)) // sformatowane z wcięciami dane odpowiedzi z serwera
         .catch((error) => console.log(error));
     </script>
   </head>
   <body>
     <div id="app">
       <h1>lekcje VueJS</h1>
-      <div class="lekcja1">
-        <h2>Lekcja 1</h2>
-      </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       new Vue({
         el: "#app",
         data: {
-          message: "Jesteś gejem!",
+          message: "Wiadomosc",
         },
       });
     </script>
