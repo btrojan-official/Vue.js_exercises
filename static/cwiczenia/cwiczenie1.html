@@ -4,19 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-    <script>
-        Vue.createApp({
-           
-            data() {
-                return {
-                    title: "title"
-                }
-            }
-        }).mount("#app")
-
-    </script>
+    
 </head>
 <body>
     <div id="app">
@@ -24,3 +12,17 @@
     </div>        
 </body>
 </html>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+            el: "#app",
+            data() {
+                return {
+                    title: "tytuł"
+                }
+            }
+        }).mount("#app")
+
+    </script>

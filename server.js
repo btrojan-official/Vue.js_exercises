@@ -3,15 +3,18 @@ const app = express();
 const PORT = 3000;
 
 const fs = require("fs");
+const path = require("path");
+
+// app.use(express.static("static/cwiczenia"));
+app.use(express.static("static"));
 
 app.get("/pagesList", function (req, res) {
-  const filenames = fs.readdirSync(__dirname + "/static/cwiczenia");
+  dir_path = path.join(__dirname,"/static/cwiczenia");
+  const filenames = fs.readdirSync(dir_path);
   console.log(filenames);
-  res.send(filenames);
+  res.send({filenames});
 });
 
-app.use(express.static("static/cwiczenia/lekcja1"));
-app.use(express.static("static"));
 app.listen(PORT, function () {
   console.log("start serwera na porcie " + PORT);
 });
