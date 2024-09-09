@@ -9,22 +9,27 @@
 
 <body>
     <div id="app">
-        <h1 v-text="title"></h1>
+        <a v-bind:href="onet_url">ONET</h1>
+            <img v-bind:width="img_width" v-bind:height="img_height" v-bind:src="img_src" />
     </div>
 </body>
 
 </html>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
 <script>
     const app = Vue.createApp({
-
         data() {
             return {
-                title: "Dyretkywa v-text zamiast {{}}"
+                onet_url: "http://onet.pl",
+                img_width: 200,
+                img_height: 200,
+                img_src: "gfx/google.png"
+
             }
         }
     }).mount("#app")
+
+    title += " <b>Dodano nowy tekst!!!</b>"
 
 </script>

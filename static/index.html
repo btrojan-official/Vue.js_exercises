@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VUE</title>
-    <link rel="stylesheet" href="style/style.css" />
 
-    <script defer>
-      function showPagesList(data) {
-        lekcja1 = document.querySelector(".lekcja1");
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VUE</title>
+  <link rel="stylesheet" href="style/style.css" />
 
-        for (const key in data) {
-          lekcja = document.createElement("div");
-          lekcja.classList.add("lekcja");
-          header = document.createElement("h2");
-          header.innerText = key;
-          lekcja.appendChild(header);
+  <script defer>
+    function showPagesList(data) {
+      lekcja1 = document.querySelector(".lekcja1");
 
-          for (const el of data[key]) {
-            link = document.createElement("a");
-            link.href = "cwiczenia/" + key + "/" + el;
-            link.textContent = el;
-            lekcja.appendChild(link);
-          }
+      for (const key in data) {
+        lekcja = document.createElement("div");
+        lekcja.classList.add("lekcja");
+        header = document.createElement("h2");
+        header.innerText = key;
+        document.getElementById("app").appendChild(header);
 
-          document.getElementById("app").appendChild(lekcja);
+        for (const el of data[key]) {
+          link = document.createElement("a");
+          link.href = "cwiczenia/" + key + "/" + el;
+          link.textContent = el;
+          lekcja.appendChild(link);
         }
-      }
 
-      const options = {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      fetch("/pagesList", options)
-        .then((response) => response.json()) // konwersja na obiekt json, jeśli konieczne
-        .then((data) => showPagesList(data)) // sformatowane z wcięciami dane odpowiedzi z serwera
-        .catch((error) => console.log(error));
-    </script>
-  </head>
-  <body>
-    <div id="app">
-      <h1>lekcje VueJS</h1>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>
-      new Vue({
-        el: "#app",
-        data: {
-          message: "Wiadomosc",
-        },
-      });
-    </script>
-  </body>
+        document.getElementById("app").appendChild(lekcja);
+      }
+    }
+
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    fetch("/pagesList", options)
+      .then((response) => response.json()) // konwersja na obiekt json, jeśli konieczne
+      .then((data) => showPagesList(data)) // sformatowane z wcięciami dane odpowiedzi z serwera
+      .catch((error) => console.log(error));
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>lekcje VueJS</h1>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        message: "Wiadomosc",
+      },
+    });
+  </script>
+</body>
+
 </html>

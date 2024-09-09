@@ -9,22 +9,23 @@
 
 <body>
     <div id="app">
-        <h1 v-text="title"></h1>
+        <h1 v-html="title"></h1>
     </div>
 </body>
 
 </html>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
 <script>
     const app = Vue.createApp({
 
         data() {
             return {
-                title: "Dyretkywa v-text zamiast {{}}"
+                title: "<i>Dyretkywa v-html</i> <s>nie</s> pozwala na interpretację znaczników html"
             }
         }
     }).mount("#app")
+
+    title += " <b>Dodano nowy tekst!!!</b>"
 
 </script>
