@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .car {
+            border: 1px solid black;
+            width: max-content;
+            padding: 20px;
+        }
+
+        .car>img {
+            width: 200px;
+        }
+
+        .new-car {
+            background-color: green;
+        }
+
+        .old-car {
+            background-color: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Cars List</h1>
+
+        <div class="cars">
+
+            <div class="car" :class="getCarClass(car)" v-for="car in cars">
+
+                <h2>{{ getCarData(car) }}</h2>
+                <img :src="getCarImage(car)" :alt="getCarImage(car)">
+            </div>
+
+        </div>
+</body>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                cars: [
+                    { id: 1, name: "Ford", model: "Mustang", year: 1964, img: "https://www.gpas-cache.ford.com/guid/d5523d74-629a-3de5-89b0-7ae61d072aad.png" },
+                    { id: 2, name: "Fiat", model: "Panda", year: 2001, img: "https://upload.wikimedia.org/wikipedia/commons/b/bb/2023_Lamborghini_Aventador_Ultimae.jpg" },
+                    { id: 3, name: "Lamborgini", model: "Aventador", year: 2004, img: "https://upload.wikimedia.org/wikipedia/commons/b/bb/2023_Lamborghini_Aventador_Ultimae.jpg" },
+                    { id: 4, name: "BMW", model: "M3", year: 2010, img: "https://www.gpas-cache.ford.com/guid/d5523d74-629a-3de5-89b0-7ae61d072aad.png" }
+                ]
+            }
+        },
+        methods: {
+            getCarData(car) {
+                return car.name + " - " + car.model + " - " + car.year
+            },
+            getCarImage(car) {
+                return car.img
+            },
+            getCarClass(car) {
+                if (car.year > 2000) {
+                    return "new-car"
+                }
+                return "old-car"
+            }
+        }
+
+    }).mount("#app")
+
+</script>

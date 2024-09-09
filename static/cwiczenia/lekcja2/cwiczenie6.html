@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Computed:</h1>
+        <h2>liczba losowa: {{ getNumberC}} </h2>
+        <h2>liczba losowa: {{ getNumberC}} </h2>
+        <h2>liczba losowa: {{ getNumberC}} </h2>
+        <br>
+
+        <h1>Method:</h1> 
+        <h2>liczba losowa: {{ getNumberM() }} </h2>
+        <h2>liczba losowa: {{ getNumberM() }} </h2>
+        <h2>liczba losowa: {{ getNumberM() }} </h2>
+    </div>
+</body>
+
+</html>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {}
+        },
+        computed: {
+            getNumberC() {
+                return Math.random()
+            }
+        },
+        methods: {
+            getNumberM() {
+                return Math.random()
+            }
+        }
+
+
+
+    }).mount("#app")
+
+</script>

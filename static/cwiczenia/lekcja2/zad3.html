@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .zegar {
+            border: 2px solid black;
+            border-radius: 20px;
+            padding: 20px;
+            width: min-content;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Czas, a kolor</h1>
+        <ul>
+            <li>Użyj app.start() w konsoli by wystartować timer</li>
+            <li>Użyj app.pause() w konsoli by zatrzymać timer</li>
+        </ul>
+
+        <div class="zegar">
+            <div class="komunikat">{{komunikat}}</div>
+            <div class="czas"> {{formatTime(czas)}} </div>
+        </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+
+            return {
+                start_time: 0,
+                czas: 10,
+                prev_czas: 0,
+                czas_pracy: 0,
+                czas_odpoczynku: 0,
+                praca: false,
+                komunikat: "Odpczywaj!",
+                interval: null
+            }
+        },
+        methods: {
+            start() {
+                this.start_time = Date.now()
+                this.interval = setInterval(() => {
+                    if (this.praca == false) {
+                        this.komunikat = "Odpoczywaj!"
+                        this.czas_odpoczynku = Date.now() - this.start_time + this.prev_czas;
+                        this.czas = 10 - Math.floor(this.czas_odpoczynku / 1000)
+                        if (this.czas_odpoczynku >= 9999) {
+                            this.praca = true
+                            this.czas_odpoczynku = 0
+                            this.start_time = Date.now()
+                            this.prev_czas = 0;
+                        }
+                    } else {
+                        this.komunikat = "Pracuj!"
+                        this.czas_pracy = Date.now() - this.start_time + this.prev_czas;
+                        this.czas = 5 - Math.floor(this.czas_pracy / 1000)
+                        if (this.czas_pracy >= 4999) {
+                            this.praca = false
+                            this.czas_pracy = 0
+                            this.start_time = Date.now()
+                            this.prev_czas = 0;
+                        }
+                    }
+                    // increment by 1000 milliseconds (1 second)
+                }, 1);
+            },
+            pause() {
+                clearInterval(this.interval)
+                if (this.praca == false) this.prev_czas = this.czas_odpoczynku;
+                else this.prev_czas = this.czas_pracy;
+            },
+            formatTime(time) {
+                if (time.toString().length == 1) return "0:0" + time.toString();
+                else return "0:" + time.toString();
+            }
+        }
+
+    }).mount("#app")
+
+</script>

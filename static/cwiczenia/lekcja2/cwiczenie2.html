@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Dyrektywa v-for - ooperacje na obiektach</h1>
+        <li v-for="item in array">{{item}}</li>
+        <li v-for="item in array">{{item.a}} {{item.b}}</li>
+        <li v-for="(item,i) in array">{{i}}: {{item.a}} {{item.b}}</li>
+
+    </div>
+</body>
+
+</html>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                array: [{ a: 1, b: 4 }, { a: 2, b: 5 }, { a: 3, b: 6 }]
+            }
+        }
+
+    }).mount("#app")
+
+</script>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .red {
+            background-color: red;
+            color: yellow;
+            padding: 50px;
+
+            font-size: 5em;
+        }
+
+        .blue {
+            background-color: blue;
+            color: white;
+            padding: 70px;
+
+            font-size: 3em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Czas, a kolor</h1>
+
+        <div class="item" :class="getColor()">
+            {{Math.floor(czas/1000)}}
+        </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+
+            return {
+                start: 0,
+                czas: 0
+            }
+        },
+        mounted() {
+            this.start = Date.now()
+            setInterval(() => {
+                this.czas = Date.now() - this.start; // increment by 1000 milliseconds (1 second)
+            }, 1); // interval in milliseconds (1 second)
+        },
+        methods: {
+            getColor() {
+                return Math.floor(this.czas / 1000) % 2 == 0 ? "red" : "blue"
+            }
+        }
+
+    }).mount("#app")
+
+</script>
