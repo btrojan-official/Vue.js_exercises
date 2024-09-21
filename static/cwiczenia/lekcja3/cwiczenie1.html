@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .zegar {
+            border: 2px solid black;
+            border-radius: 20px;
+            padding: 20px;
+            width: min-content;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Dyrektywa v-on: (równoważna @)</h1>
+
+        <div @click="onClick">CLICK ME!</div>
+        <input type="checkbox" @click="onCheckbox">
+        <button @click="onButtonClick">KLIK</button>
+
+        <select v-on:change="onChange">
+               <option>[wybierz]</option>
+               <option>option 1</option>
+               <option>option 2</option>
+        </select>
+
+        <div>{{ selected }}</div>
+
+        <input type="range" v-on:input="onInput" min="0" max="100">
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+
+            return {
+                selected: "not selected",
+            }
+        },
+        methods: {
+            onClick() {
+                console.log("CLICK")
+            },
+
+            onChange(e) {
+                this.selected = e.target.value
+            },
+
+            onCheckbox(e) {
+                console.log(e.target.checked)
+            },
+            onInput(e) {
+                console.log(e.target.value)
+            },
+        }
+
+    }).mount("#app")
+
+</script>

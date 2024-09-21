@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Dodawanie elementow do tablicy</h1>
+
+        <ul>
+            <li v-for="item in items" v-bind:class="{ 'active': item.checked}">{{item.text}}<input type="checkbox"
+                    v-model="item.checked"></li>
+        </ul>
+
+        <input type="text" v-on:keyup.enter="addItem" v-model="item_name">
+        <button @click="addItem">Dodaj element</button>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                items: [
+                    { text: "element 1", checked: true },
+                    { text: "element 2", checked: false },
+                    { text: "element 3", checked: false },
+                ],
+                item_name: ""
+            }
+        },
+        methods: {
+            addItem(e) {
+                this.items.push({ text: this.item_name, checked: false })
+                this.item_name = ""
+            }
+        }
+
+    }).mount("#app")
+
+</script>

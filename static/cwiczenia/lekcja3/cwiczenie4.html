@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .text {
+            padding: 50px;
+            border: 5px solid black;
+            border-radius: 20px;
+            width: min-content;
+        }
+
+        .active {
+            background-color: blue;
+            color: white;
+        }
+
+        .disactive {
+            background-color: rgb(87, 87, 87);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>v-on:click</h1>
+        <div class="text">{{text}}</div>
+        <br>
+        <button @click="setText('aaa')" class="active">B1</button>
+        <button @click="setText('bbb')" class="active">B2</button>
+        <button @click="setText('fff')" class="active">B3</button>
+        <br>
+        <button @click="setText('ddd')" :class="isFFF" :disabled="text!='fff'">B4</button>
+        <button @click="setText('eee')" :class="isFFF" :disabled="text!='fff'">B5</button>
+        <button @click="setText('fff')" :class="isFFF" :disabled="text!='fff'">B6</button>
+    </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                text: "aaa"
+            }
+        },
+        methods: {
+            setText(text) {
+                this.text = text
+            }
+        },
+        computed: {
+            isFFF() {
+                if (this.text == "fff") {
+                    return "active"
+                } else {
+                    return "disactive"
+                }
+            }
+        }
+
+    }).mount("#app")
+
+</script>

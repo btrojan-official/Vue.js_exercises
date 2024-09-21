@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .availability {
+            background-color: gray;
+            text-align: center;
+        }
+
+        .shops {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Shops</h1>
+
+        <div class="shops">
+            <div class="sklep" v-if="getNumberOfProducts() > 0" v-for="(shop,j) of shops">
+                <button @click="clearShop(j)" v-if="shop.products.length > 0">Clear {{shop.name}}</button>
+
+                <table v-if="shop.products.length > 0">
+                    <tr>
+                        <th>id</td>
+                        <th>name</th>
+                        <th>price</th>
+                        <th>cart</th>
+                    </tr>
+                    <template v-for="(item,i) of shop.products" :key="item.id">
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.product}}</td>
+                            <td>{{item.price}}</td>
+                            <td><button @click="addToCart(j,i)">{{item.selected}}</button></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="availability">{{item.availability}}</td>
+                        </tr>
+                    </template>
+                </table>
+
+                <div class="buttons" v-if="shop.products.length > 0">
+                    <button @click="sortProducts(j, 'id')">by ID</button>
+                    <button @click="sortProducts(j, 'product')">Alphabetically</button>
+                    <button @click="sortProducts(j, 'price')">by Price</button>
+                    <button @click="sortProducts(j, 'cart')">by Cart</button>
+                </div>
+            </div>
+            <h3 v-else>We're sorry. The shops run out of supplies. Please come back later.</h3>
+        </div>
+    </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                shops: [
+                    {
+                        id: 1, name: "Grocery Store",
+                        products: [
+                            { id: 1, product: "Salad", price: 5, selected: "add to the cart", availability: "available" },
+                            { id: 2, product: "Tomatoes", price: 20, selected: "add to the cart", availability: "available" },
+                            { id: 3, product: "Milk", price: 3, selected: "add to the cart", availability: "available" },
+                            { id: 4, product: "Carrot", price: 30, selected: "add to the cart", availability: "available" },
+                            { id: 5, product: "Potato", price: 32, selected: "add to the cart", availability: "available" },
+                        ]
+                    },
+                    {
+                        id: 2, name: "Computer Accesories",
+                        products: [
+                            { id: 1, product: "GPU", price: 2100, selected: "add to the cart", availability: "available" },
+                            { id: 2, product: "Monitor", price: 600, selected: "add to the cart", availability: "available" },
+                            { id: 3, product: "Keyboard", price: 200, selected: "add to the cart", availability: "available" },
+                            { id: 4, product: "Mouse", price: 50, selected: "add to the cart", availability: "available" },
+                        ]
+                    }
+                ]
+            }
+        },
+        methods: {
+            addToCart(shop_id, product_id) {
+                if (this.shops[shop_id].products[product_id].selected == "add to the cart") {
+                    this.shops[shop_id].products[product_id].selected = "in cart"
+                } else {
+                    this.shops[shop_id].products[product_id].selected = "add to the cart"
+                }
+            },
+            sortProducts(shop_id, metric) {
+                if (metric == "cart") {
+                    this.shops[shop_id].products.sort(function (a, b) {
+                        if (a.selected == "add to the cart" && b.selected == "in cart") return 1;
+                        if (a.selected == "in cart" && b.selected == "add to the cart") return -1;
+                        return 0;
+                    });
+                } else this.shops[shop_id].products = _.sortBy(this.shops[shop_id].products, [metric]);
+            },
+            clearShop(shop_id) {
+                this.shops[shop_id].products.length = 0
+            },
+            getNumberOfProducts() {
+                let count = 0
+                for (let i = 0; i < this.shops.length; i++) {
+                    count += this.shops[i].products.length
+                }
+                return count
+            }
+        }
+
+    }).mount("#app")
+
+</script>

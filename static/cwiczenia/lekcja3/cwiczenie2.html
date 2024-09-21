@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .zegar {
+            border: 2px solid black;
+            border-radius: 20px;
+            padding: 20px;
+            width: min-content;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Dyrektywa v-show</h1>
+
+        <button v-on:click="showElement">{{text}}</button>
+        <h3 v-show="show">MAGIC BLOCK</h3>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+
+            return {
+                show: false,
+                text: "Do the magic!"
+            }
+        },
+        methods: {
+            showElement(e) {
+                this.show = !this.show
+            }
+        }
+
+    }).mount("#app")
+
+</script>

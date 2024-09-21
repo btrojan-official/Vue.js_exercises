@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table v-if="products.length > 0">
+            <tr>
+                <th>id</td>
+                <th>nazwa</th>
+                <th>cena</th>
+                <th>dodaj do/usuń z koszyka</th>
+                <th>notatka</th>
+            </tr>
+            <tr v-for="(item,i) of products" :key="item.id">
+                <td>{{item.id}}</td>
+                <td>{{item.product}}</td>
+                <td>{{item.price}}</td>
+                <td><button @click="addToCart(i)">{{item.selected}}</button></td>
+                <td><input type="text"></td>
+            </tr>
+        </table>
+        <p v-else>brak produktów do wyświetlenia</p>
+
+        <button @click="sortAZ()">WG A-Z</button>
+        <button @click="sortID()">WG ID</button>
+        <button @click="sortPrice()">WG CENY</button>
+        <button @click="sortCart()">WG KOSZYKA</button>
+    </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data() {
+            return {
+                products: [
+                    { id: 1, product: "książka", price: 100, selected: "dodaj do koszyka" },
+                    { id: 2, product: "płyta CD", price: 200, selected: "dodaj do koszyka" },
+                    { id: 3, product: "mleko", price: 300, selected: "dodaj do koszyka" },
+                    { id: 4, product: "buty", price: 400, selected: "dodaj do koszyka" },
+                ]
+            }
+        },
+        methods: {
+            addToCart(id) {
+                if (this.products[id].selected == "dodaj do koszyka") {
+                    this.products[id].selected = "w koszyku"
+                } else {
+                    this.products[id].selected = "dodaj do koszyka"
+                }
+            },
+            sortAZ() {
+                this.products.sort(function (a, b) {
+                    if (a.product < b.product) return -1;
+                    if (a.product > b.product) return 1;
+                    return 0;
+                });
+            },
+            sortID() {
+                this.products.sort(function (a, b) {
+                    if (a.id < b.id) return -1;
+                    if (a.id > b.id) return 1;
+                    return 0;
+                });
+            },
+            sortPrice() {
+                this.products.sort(function (a, b) {
+                    if (a.price < b.price) return -1;
+                    if (a.price > b.price) return 1;
+                    return 0;
+                });
+            },
+            sortCart() {
+                this.products.sort(function (a, b) {
+                    if (a.selected == "dodaj do koszyka" && b.selected == "w koszyku") return 1;
+                    if (a.selected == "w koszyku" && b.selected == "dodaj do koszyka") return -1;
+                    return 0;
+                });
+            }
+        }
+
+    }).mount("#app")
+
+</script>
