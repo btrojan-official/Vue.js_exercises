@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        body{
+            background-color: rgb(39, 39, 39);
+            color: rgb(177, 177, 177);
+        }
+        form{
+            padding: 50px;
+            border: 5px solid gray;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <form action="/aaa" method="POST" @reset="reset" @submit="submit">
+            <h1>Form</h1>
+            <input type="text" name="name">
+            <button type="submit">send</button>
+            <button type="reset">resetuj</button>
+            <input type="checkbox" id="cb" v-model="checked"><label for="cb">Blokuj bazowe działania formularza</label>
+        </form>
+        <span>{{message}}</span>
+    </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data(){
+            return {
+                message: "",
+                checked: false
+            }
+        },
+        methods: {
+            reset(e) {
+                if(this.checked) e.preventDefault();
+                this.message = "Próba resetu formularza"
+            },
+            submit (e) {
+                if(this.checked) e.preventDefault();
+                this.message = "Próba wysłania formularza"
+            }
+
+        }
+    }).mount("#app")
+
+</script>

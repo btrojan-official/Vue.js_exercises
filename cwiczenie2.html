@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        body{
+            background-color: rgb(39, 39, 39);
+            color: rgb(177, 177, 177);
+        }
+        form{
+            padding: 50px;
+            border: 5px solid gray;
+            border-radius: 20px;
+            display: flex;
+            justify-content: space-evenly;
+            width: 800px;
+        }
+        .inputs, .data{
+            display: flex;
+            flex-direction: column;
+        }
+        input{
+            margin-bottom: 5px;
+            width: 300px;
+        }
+        .active{
+            background-color: rgb(46, 115, 206);
+        }
+        .inactive{
+            background-color: rgb(233, 233, 233);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <form action="/aaa" method="POST" @reset="reset" @submit="submit">
+            <div class="inputs">
+                <u>Uzupełnij dane</u>
+                <input type="text" v-model="name" placeholder="Name"> Length: {{name.length}}
+                <input type="text" v-model="surname" placeholder="Surname"> Length: {{surname.length}}
+                <input type="text" v-model="occupation" placeholder="Occupation"> Length: {{occupation.length}}
+                <input type="text" v-model="salary" placeholder="Salary"> Length: {{salary.length}}
+                <input type="submit" value="send" :disabled="!isReady" :class="isReady ? 'active' : 'inactive'"/>
+            </div>
+            <div class="data">
+                <u>Validate your answers</u>
+                <span><b>Name: </b>{{name}}</span>
+                <span><b>Surname: </b>{{surname}}</span>
+                <span><b>Occupation: </b>{{occupation}}</span>
+                <span><b>Salary: </b>{{salary}}</span>
+            </div>
+        </form>
+    </div>
+
+</html>
+
+<script src=" https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+<script>
+    const app = Vue.createApp({
+        el: "#app",
+        data(){
+            return {
+                name: "",
+                surname: "",
+                occupation: "",
+                salary: "",
+            }
+        },
+        methods: {
+            reset(e) {
+                if(this.checked) e.preventDefault();
+                this.message = "Próba resetu formularza"
+            },
+            submit (e) {
+                if(this.checked) e.preventDefault();
+                this.message = "Próba wysłania formularza"
+            }
+        },
+        computed: {
+            isReady(){
+                if(this.name != "" && this.surname != "" && this.occupation != "" && this.salary != ""){
+                    return true
+                }else{
+                    return false
+                }
+            }
+        }
+    }).mount("#app")
+
+</script>
