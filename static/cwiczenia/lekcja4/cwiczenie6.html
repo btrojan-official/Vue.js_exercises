@@ -1,60 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form</title>
-  </head>
-  <body>
-    <div id="app">
-      <form>
-        <div class="sekcja" v-for="(val,key) in data">{{key}}</div>
-      </form>
-    </div>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      height: 200px;
+      width: 400px;
+    }
+  </style>
+</head>
 
-    <script>
-      const app = Vue.createApp({
-        data() {
-          console.log("data", new Date().getTime());
-          return {
-            data: {},
-          };
-        },
-        created() {
-          console.log("created", new Date().getTime());
-        },
-        mounted() {
-          console.log("mounted", new Date().getTime());
-          fetch("http://localhost:3000/shop_data", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(
-                  "Network response was not ok " + response.statusText
-                );
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Data fetched successfully:", data);
-              this.data = data;
-            })
-            .catch((error) => {
-              console.error(
-                "There was a problem with the fetch operation:",
-                error
+<body>
+  <div id="app">
+    <form>
+      <div class="sekcja" v-if="data.products">
+        <h1>Produkty</h1>
+        <div class="wrapper">
+          <div v-for="product of data.products">
+            <input type="checkbox" id="{{ product }}"><label for="{{ product }}">{{ product }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sekcja" v-if="data.delivery">
+        <h1>Dostawa</h1>
+        <div class="wrapper">
+          <div v-for="product of data.delivery">
+            <input type="radio" id="{{ product }}"><label for="{{ product }}">{{ product }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="sekcja" v-if="data.payment">
+        <h1>Płatność</h1>
+        <div class="wrapper">
+          <div v-for="product of data.payment">
+            <img src="{{ product.link }}" alt="{{product.name}}">
+            <input type="radio" id="{{ product.name }}"><label for="{{ product.name }}">{{ product.name }}</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        console.log("data", new Date().getTime());
+        return {
+          data: {},
+        };
+      },
+      created() {
+        console.log("created", new Date().getTime());
+      },
+      mounted() {
+        console.log("mounted", new Date().getTime());
+        fetch("http://localhost:3000/shop_data", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Network response was not ok " + response.statusText
               );
-            });
-        },
-        methods: {},
-      }).mount("#app");
-    </script>
-  </body>
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Data fetched successfully:", data);
+            this.data = data;
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with the fetch operation:",
+              error
+            );
+          });
+      },
+    }).mount("#app");
+  </script>
+</body>
+
 </html>

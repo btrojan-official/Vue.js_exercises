@@ -18,10 +18,23 @@
     "Klawiatura",
     "Pendrive"
   ],
-  "delivery": ["Kurier", "Paczkomat", "Odbiór osobisty"],
+  "delivery": [
+    "Kurier",
+    "Paczkomat",
+    "Odbiór osobisty"
+  ],
   "payment": [
-    { "name": "Blik", "link": "static/gfx/blik.png" },
-    { "name": "G-Pay", "link": "static/gfx/gpay.jpg" },
-    { "name": "Przelewy24", "link": "static/gfx/przelewy24.png" }
+    {
+      "name": "Blik",
+      "link": "blik.png"
+    },
+    {
+      "name": "G-Pay",
+      "link": "gpay.jpg"
+    },
+    {
+      "name": "Przelewy24",
+      "link": "przelewy24.png"
+    }
   ]
 }
