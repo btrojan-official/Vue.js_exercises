@@ -1,0 +1,27 @@
+{
+  "products": [
+    "Kompter",
+    "Laptop",
+    "Telefon",
+    "Tablet",
+    "Smartwatch",
+    "Konsola",
+    "Telewizor",
+    "Aparat",
+    "Kamera",
+    "Drukarka",
+    "Skaner",
+    "Monitor",
+    "Głośniki",
+    "Słuchawki",
+    "Myszka",
+    "Klawiatura",
+    "Pendrive"
+  ],
+  "delivery": ["Kurier", "Paczkomat", "Odbiór osobisty"],
+  "payment": [
+    { "name": "Blik", "link": "static/gfx/blik.png" },
+    { "name": "G-Pay", "link": "static/gfx/gpay.jpg" },
+    { "name": "Przelewy24", "link": "static/gfx/przelewy24.png" }
+  ]
+}

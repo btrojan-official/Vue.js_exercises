@@ -27,6 +27,13 @@ app.get("/pagesList", function (req, res) {
   res.send(files);
 });
 
+app.get("/shop_data", function (req, res) {
+  let data = fs.readFileSync("static/data/shop_data.json");
+  let json = JSON.parse(data);
+
+  res.send(json);
+});
+
 app.listen(PORT, function () {
   console.log("start serwera na porcie " + PORT);
 });

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+  </head>
+  <body>
+    <div id="app">
+      <form>
+        <input
+          type="checkbox"
+          id="klawiatura"
+          v-model="klawiatura"
+          true-value="tak"
+          false-value="nie"
+        /><label for="klawiatura">klawiatura</label>
+        <input
+          type="checkbox"
+          id="mysz"
+          v-model="mysz"
+          true-value="tak"
+          false-value="nie"
+        /><label for="mysz">mysz</label>
+        <br />
+        <u>Forma odbioru</u>
+        <input
+          type="radio"
+          id="kurier"
+          v-model="dostawa"
+          value="kurier"
+        /><label for="kurier">kurier</label>
+        <input
+          type="radio"
+          id="osobiscie"
+          v-model="dostawa"
+          value="osobiscie"
+        /><label for="osobiscie">odbiór osobisty</label>
+        <br />
+        <u>Potwierdzenie</u>
+        <input
+          type="checkbox"
+          id="potwierdzenie"
+          v-model="potwierdzenie"
+        /><label for="potwierdzenie"
+          >Potwierdzam zgodność danych w podanym formularzu</label
+        >
+        <br />
+        <input type="submit" :disabled="!isAllSelected()" value="Wyślij" />
+      </form>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            klawiatura: "nie",
+            mysz: "nie",
+            dostawa: "",
+            potwierdzenie: false,
+          };
+        },
+        methods: {
+          isAllSelected() {
+            return (
+              (this.klawiatura === "tak" || this.mysz === "tak") &&
+              this.dostawa !== "" &&
+              this.potwierdzenie
+            );
+          },
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
