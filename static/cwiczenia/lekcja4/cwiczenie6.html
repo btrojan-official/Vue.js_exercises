@@ -1,186 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form</title>
-    <style>
-      body {
-        background-color: rgb(155, 155, 155);
-      }
-      .wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-      }
-      .w1 {
-        height: 140px;
-        width: 200px;
-      }
-      .w2 {
-        height: 60px;
-      }
-      img {
-        width: 100px;
-      }
-    </style>
-  </head>
 
-  <body>
-    <div id="app">
-      <form>
-        <div class="sekcja" v-if="data.products">
-          <h1>Produkty</h1>
-          <div class="wrapper w1">
-            <div v-for="(product,i) of data.products">
-              <input
-                type="checkbox"
-                :id="product"
-                v-model="selected_products[i]"
-              /><label :for="product">{{ product }}</label>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    body {
+      background-color: rgb(155, 155, 155);
+    }
+
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+
+    .w1 {
+      height: 140px;
+      width: 200px;
+    }
+
+    .w2 {
+      height: 60px;
+    }
+
+    img {
+      width: 100px;
+    }
+
+    .cart {
+      position: fixed;
+      top: 0;
+      right: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <form>
+      <div class="sekcja">
+        <h1>Produkty</h1>
+        <div class="wrapper w1">
+          <div v-for="(product,i) of data.products">
+            <input type="checkbox" :id="product" v-model="selected_products[i]" /><label :for="product">{{ product
+              }}</label>
           </div>
         </div>
+      </div>
 
-        <div class="sekcja" v-if="data.delivery">
-          <h1>Dostawa</h1>
-          <div class="wrapper w2">
-            <div v-for="product of data.delivery">
-              <input
-                type="radio"
-                :id="product"
-                v-model="delivery"
-                :value="product"
-              /><label :for="product">{{ product }}</label>
-            </div>
+      <div class="sekcja" v-if="data.delivery">
+        <h1>Dostawa</h1>
+        <div class="wrapper w2">
+          <div v-for="product of data.delivery">
+            <input type="radio" :id="product" v-model="delivery" :value="product" /><label :for="product">{{ product
+              }}</label>
           </div>
         </div>
+      </div>
 
-        <div class="sekcja" v-if="data.payment">
-          <h1>Płatność</h1>
-          <div class="wrapper">
-            <div v-for="product of data.payment">
-              <img :src="getImg(product.link)" :alt="product.name" />
-              <input
-                type="radio"
-                :id="product.name"
-                :value="product.name"
-                v-model="payment"
-              /><label :for="product.name">{{ product.name }}</label>
-            </div>
+      <div class="sekcja" v-if="data.payment">
+        <h1>Płatność</h1>
+        <div class="wrapper">
+          <div v-for="product of data.payment">
+            <img :src="getImg(product.link)" :alt="product.name" />
+            <input type="radio" :id="product.name" :value="product.name" v-model="payment" /><label
+              :for="product.name">{{ product.name }}</label>
           </div>
         </div>
+      </div>
 
-        <div class="sekcja" v-if="data.payment">
-          <h1>Zgoda</h1>
-          <div class="agreement">
-            <input type="checkbox" id="agreement" v-model="agreement" /><label
-              for="agreement"
-              >Zgadzam się na przetwarzanie danych osobowych</label
-            >
-          </div>
+      <div class="sekcja" v-if="data.payment">
+        <h1>Zgoda</h1>
+        <div class="agreement">
+          <input type="checkbox" id="agreement" v-model="agreement" /><label for="agreement">Zgadzam się na
+            przetwarzanie danych osobowych</label>
         </div>
-        <button type="button" :disabled="!isDisabled" @click="send()">
-          Wyślij
-        </button>
-      </form>
-
-      <div class="cart">
+      </div>
+      <div class="cart" v-if="selected_products.includes(true)">
         <h1>Koszyk</h1>
         <ul>
           <!--Przerób to na metodę która zwraca wybrane rzeczy-->
-          <li v-for="(product, i) of selected_products" v-if="product">
-            {{ data.products[i] }}1
+          <li v-for="(product, i) of getCart()">
+            {{ product }}
           </li>
         </ul>
         <p>Dostawa: {{ delivery }}</p>
         <p>Płatność: {{ payment }}</p>
         <p>Zgoda: {{ agreement }}</p>
+
+        <button type="button" :disabled="!isDisabled" @click="send()">
+          Wyślij
+        </button>
       </div>
-    </div>
+    </form>
+  </div>
 
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
 
-    <script>
-      const app = Vue.createApp({
-        data() {
-          console.log("data", new Date().getTime());
-          return {
-            data: {},
-            selected_products: [],
-            delivery: "",
-            payment: "",
-            agreement: false,
-          };
+  <script>
+    const app = Vue.createApp({
+      data() {
+        console.log("data", new Date().getTime());
+        return {
+          data: {},
+          selected_products: [],
+          delivery: "",
+          payment: "",
+          agreement: false,
+        };
+      },
+      created() {
+        console.log("created", new Date().getTime());
+      },
+      mounted() {
+        console.log("mounted", new Date().getTime());
+        this.fetchData();
+      },
+      methods: {
+        getImg(link) {
+          return `http://localhost:3000/gfx/${link}`;
         },
-        created() {
-          console.log("created", new Date().getTime());
+        send() {
+          console.log("send", new Date().getTime());
+          console.log("selected_products", this.selected_products);
+          console.log("delivery", this.delivery);
+          console.log("payment", this.payment);
+          console.log("agreement", this.agreement);
         },
-        mounted() {
-          console.log("mounted", new Date().getTime());
-          this.fetchData();
+        setDefaultSetting() {
+          if (this.data != {}) {
+            this.selected_products = new Array(
+              this.data.products.length
+            ).fill(false);
+            this.delivery = this.data.delivery[0];
+            this.payment = this.data.payment[0].name;
+          }
         },
-        methods: {
-          getImg(link) {
-            return `http://localhost:3000/gfx/${link}`;
-          },
-          send() {
-            console.log("send", new Date().getTime());
-            console.log("selected_products", this.selected_products);
-            console.log("delivery", this.delivery);
-            console.log("payment", this.payment);
-            console.log("agreement", this.agreement);
-          },
-          setDefaultSetting() {
-            if (this.data != {}) {
-              this.selected_products = new Array(
-                this.data.products.length
-              ).fill(false);
-              this.delivery = this.data.delivery[0];
-              this.payment = this.data.payment[0].name;
-            }
-          },
-          fetchData() {
-            fetch("http://localhost:3000/shop_data", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(
-                    "Network response was not ok " + response.statusText
-                  );
-                }
-                return response.json();
-              })
-              .then((data) => {
-                console.log("Data fetched successfully:", data);
-                this.data = data;
-                this.setDefaultSetting(); // Ensure this is called within the correct context
-                console.log(this.selected_products.length);
-              })
-              .catch((error) => {
-                console.error(
-                  "There was a problem with the fetch operation:",
-                  error
+        fetchData() {
+          fetch("http://localhost:3000/shop_data", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(
+                  "Network response was not ok " + response.statusText
                 );
-              });
-          },
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Data fetched successfully:", data);
+              this.data = data;
+              this.setDefaultSetting(); // Ensure this is called within the correct context
+              console.log(this.selected_products.length);
+            })
+            .catch((error) => {
+              console.error(
+                "There was a problem with the fetch operation:",
+                error
+              );
+            });
         },
-        computed: {
-          isDisabled() {
-            return (
-              this.selected_products.includes(true) &&
-              !this.delivery == "" &&
-              !this.payment == "" &&
-              this.agreement
-            );
-          },
+        getCart() {
+          if (!this.data.products) return [];
+          return this.data.products.filter((_, index) => this.selected_products[index]);
+        }
+      },
+      computed: {
+        isDisabled() {
+          return (
+            this.selected_products.includes(true) &&
+            !this.delivery == "" &&
+            !this.payment == "" &&
+            this.agreement
+          );
         },
-      }).mount("#app");
-    </script>
-  </body>
+      },
+    }).mount("#app");
+  </script>
+</body>
+
 </html>
