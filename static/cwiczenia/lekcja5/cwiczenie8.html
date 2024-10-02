@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .component {
+      padding: 20px;
+      border-radius: 20px;
+      border: 2px dashed black;
+      width: fit-content;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    {{title}}
+    <items-component></items-component>
+    <add-item-component :change-func-prop="change"></add-item-component>
+    <change-title-component></change-title-component>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const appData = {
+      title: "app title",
+      items: [
+        { text: "element 1" },
+        { text: "element 2" },
+
+      ],
+    }
+    const ItemsComponent = {
+      template:
+        ` <div class="component">
+            <template v-for="item of items">
+              <input type="checkbox" id="item.text"><label for="item.text">{{item.text}}</label>
+            </template>  
+          </div>
+        `,
+      data() {
+        return appData
+      }
+    };
+
+    const ChangeTitleComponent = {
+      template: `
+        <div class="component">
+          <input type="text" v-model="title">
+        </div>
+      `,
+      data() {
+        return appData
+      }
+    }
+
+    const AddItemComponent = {
+      template:
+        ` <div class="component">
+            <input type="text" v-model="newItem"><button @click="addNewItem">Add</button>
+          </div>
+        `,
+      data() {
+        return {
+          newItem: "",
+        }
+      },
+      props: ["changeFuncProp"]
+      ,
+      methods: {
+        addNewItem() {
+          this.changeFuncProp(this.newItem);
+          this.newItem = "";
+        }
+      }
+    };
+
+    const app = Vue.createApp({
+      data() {
+        return appData
+      },
+      components: {
+        "items-component": ItemsComponent,
+        "add-item-component": AddItemComponent,
+        "change-title-component": ChangeTitleComponent
+      },
+      methods: {
+        change(item) {
+          this.items.push({ text: item });
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

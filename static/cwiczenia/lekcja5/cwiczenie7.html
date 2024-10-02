@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    Value: {{value}}
+    <child :add-function="add"></child>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const Child = {
+      template: `
+        <div>
+            <button @click="addFunction(1)">Dodaj +1</button>    
+            <button @click="addFunction(2)">Dodaj +2</button>    
+            <button @click="addFunction(3)">Dodaj +3</button>    
+        </div>
+        `,
+      data() {
+        return {}
+      },
+      methods: {
+        addFunction(x) {
+          this.add(x)
+        }
+      },
+      props: ["addFunction"],
+    };
+    const app = Vue.createApp({
+      data() {
+        return {
+          value: 0
+        }
+      },
+      components: {
+        "child": Child
+      },
+      methods: {
+        add(x) {
+          this.value += x
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>
