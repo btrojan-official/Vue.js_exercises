@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .myCard{
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(196, 196, 196);
+        width: fit-content;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+        <button @click="setData()">Wstaw Dane</button>
+      <child :header="header" :name="name" :age="age"></child>
+      <child :header="header" :name="name" :age="age"></child>
+      <child :header="header" :name="name" :age="age"></child>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const Child = {
+        template: `
+        <div>
+            <h1>{{header}}</h1>
+            <span>{{name}}</span><br>  
+            <span>{{age}}</span><br>    
+        </div>
+        `,
+        props: ["name", "header", "age"],
+        data(){
+            return{
+                value: this.value
+            }
+        },
+    };
+    const app = Vue.createApp({
+      data(){
+        return {
+            header:"Default header",
+            name: "Default name",
+            age: "Default age"
+        }
+      },
+      components: {
+        "child": Child
+      },
+      methods:{
+        setData(){
+            this.header = "Nagłówek!!!"
+            this.name = "Jan Nowak",
+            this.age = "14"
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

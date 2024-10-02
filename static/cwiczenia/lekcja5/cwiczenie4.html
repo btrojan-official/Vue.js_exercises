@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .myCard{
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(196, 196, 196);
+        width: fit-content;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+        <button @click="add()">+1</button>
+      <child :value="value"></child>
+      <child :value="value"></child>
+      <child :value="value"></child>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const Child = {
+        template: `
+        <div>
+            <h1>child</h1>
+            <span>{{value}}</span>    
+        </div>
+        `,
+        props: ["value"],
+        data(){
+            return{
+                value: this.value
+            }
+        },
+    };
+    const app = Vue.createApp({
+      data(){
+        return {
+            value: 100
+        }
+      },
+      components: {
+        "child": Child
+      },
+      methods:{
+        add(){
+            this.value += 1
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .myCard{
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(196, 196, 196);
+        width: fit-content;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+      <my-card header="Nagłówek!!!" name="Jacek" surname="Nowak" age="26" occupation="Kierowca"></my-card>
+      <my-card header="Nagłówek!!! 2" name="Anna-Maria" surname="Wesołowska" age="30" occupation="Sędzia"></my-card>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const MyCard = {
+        template: `
+                <div class="myCard">                
+                    <u>{{header}}</u>
+                    <span>imię: {{name}}</span>
+                    <span>naziwsko: {{surname}}</span>
+                    <span>wiek: {{age}}</span>
+                    <span>zawód: {{occupation}}</span>
+                    <pre>{{JSON.stringify(this.$props, null,5)}}</pre>
+                </div>
+                `,
+
+        data () {
+            return {
+                header: this.header,
+                name: this.name,
+                surname: this.surname,
+                age: this.age,
+                occupation: this.occupation
+            }
+        },
+
+        props: ["header","name", "surname","age", "occupation"],
+
+        methods: {
+
+        },
+    };
+    const app = Vue.createApp({
+      data(){},
+      methods:{},
+      components: {
+        "my-card": MyCard
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>

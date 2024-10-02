@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form</title>
+  <style>
+    .myCard{
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(196, 196, 196);
+        width: fit-content;
+        padding: 20px;
+        margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+      <my-card></my-card>
+      <my-card></my-card>
+      <my-card></my-card>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+  <script>
+    const MyCard = {
+        template: `
+                <div class="myCard">                
+                    <u>Moja wizytówka</u>
+                    <span>imię: {{name}}</span>
+                    <span>naziwsko: {{surname}}</span>
+                    <span>wiek: {{age}}</span>
+                    <span>zawód: {{occupation}}</span>
+                </div>
+                `,
+
+        data () {
+            return {
+                name: "Jan",
+                surname: "Nowak",
+                age: 18,
+                occupation: "elektryk"
+            }
+        },
+
+        methods: {
+
+        },
+    };
+    const app = Vue.createApp({
+      data(){},
+      methods:{},
+      components: {
+        "my-card": MyCard
+      }
+    }).mount("#app");
+  </script>
+</body>
+
+</html>
