@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue sprawdzian - przygotowanie się</title>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+    <style>
+      .parent {
+        border: 1px dashed black;
+        padding: 10px;
+        margin: 10px;
+      }
+      .child {
+        border: 1px dashed red;
+        padding: 10px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{title}}</h1>
+      <parent-component></parent-component>
+    </div>
+  </body>
+</html>
+<script>
+  const childComponent = {
+    template: `<div class="child">
+      Child {{childValue}}
+      <button @click="increment">Increment</button>
+      <button @click="send">Send to parent</button>
+    </div>`,
+    props: ["initValue", "sendToParent"],
+    data() {
+      return {
+        childValue: this.initValue,
+      };
+    },
+    methods: {
+      increment() {
+        console.log("increment");
+        this.childValue++;
+      },
+      send() {
+        this.sendToParent(this.childValue);
+      },
+    },
+  };
+
+  const ParentComponent = {
+    template: `
+    <div class="parent">
+      <h1>Parent</h1>
+      <p>{{parentValue}}</p>
+
+      <child-component init-value="111" :send-to-parent="sendToParent"></child-component>
+      <child-component init-value="222" :send-to-parent="sendToParent"></child-component>
+      <child-component init-value="333" :send-to-parent="sendToParent"></child-component>
+    </div>
+    `,
+    data() {
+      return {
+        parentValue: 0,
+      };
+    },
+    methods: {
+      sendToParent(x) {
+        this.parentValue = x;
+      },
+    },
+    // Local registration of child component
+    components: {
+      "child-component": childComponent,
+    },
+  };
+
+  const app = Vue.createApp({
+    data() {
+      return {
+        title: "Witam",
+      };
+    },
+    components: {
+      "parent-component": ParentComponent, // Parent component globally registered
+    },
+  }).mount("#app");
+</script>
